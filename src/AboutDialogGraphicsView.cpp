@@ -40,11 +40,11 @@
     \brief The constructor initializes everything needed for the 3D animation.
  */
 AboutDialogGraphicsView::AboutDialogGraphicsView(AboutDialog *aboutDialog, QWidget *parentWindow) : QGraphicsView(parentWindow)
-	, _aboutDialog(NULL)
-	, _graphicsProxyWidget(NULL)
-	, _parentWindow(NULL)
-	, _timeLine(NULL)
-	, _aboutDialogAsSplashScreen(NULL)
+    , _aboutDialog(NULL)
+    , _graphicsProxyWidget(NULL)
+    , _parentWindow(NULL)
+    , _timeLine(NULL)
+    , _aboutDialogAsSplashScreen(NULL)
 {
     _parentWindow = parentWindow;
     setWindowFlags(Qt::SplashScreen);
@@ -127,12 +127,12 @@ void AboutDialogGraphicsView::show() {
 
     QRectF r = _graphicsProxyWidget->boundingRect();
     _graphicsProxyWidget->setTransform(QTransform()
-        .translate(r.width() / 2, -_windowTitleBarWidth)
-        .rotate(270, Qt::XAxis)
-        //.rotate(90, Qt::YAxis)
-        //.rotate(5, Qt::ZAxis)
-        //.scale(1 + 1.5 * step, 1 + 1.5 * step)
-        .translate(-r.width() / 2, _windowTitleBarWidth));
+                                       .translate(r.width() / 2, -_windowTitleBarWidth)
+                                       .rotate(270, Qt::XAxis)
+                                       //.rotate(90, Qt::YAxis)
+                                       //.rotate(5, Qt::ZAxis)
+                                       //.scale(1 + 1.5 * step, 1 + 1.5 * step)
+                                       .translate(-r.width() / 2, _windowTitleBarWidth));
 
     _graphicsProxyWidget->show();
     //_aboutDialogAsSplashScreen->show();
@@ -150,12 +150,12 @@ void AboutDialogGraphicsView::show() {
 void AboutDialogGraphicsView::updateStep(int step) {
     QRectF r = _graphicsProxyWidget->boundingRect();
     _graphicsProxyWidget->setTransform(QTransform()
-        .translate(r.width() / 2, -_windowTitleBarWidth)
-        .rotate(step, Qt::XAxis)
-        //.rotate(step, Qt::YAxis)
-        //.rotate(step * 5, Qt::ZAxis)
-        //.scale(1 + 1.5 * step, 1 + 1.5 * step)
-        .translate(-r.width() / 2, _windowTitleBarWidth));
+                                       .translate(r.width() / 2, -_windowTitleBarWidth)
+                                       .rotate(step, Qt::XAxis)
+                                       //.rotate(step, Qt::YAxis)
+                                       //.rotate(step * 5, Qt::ZAxis)
+                                       //.scale(1 + 1.5 * step, 1 + 1.5 * step)
+                                       .translate(-r.width() / 2, _windowTitleBarWidth));
     //update();
 }
 
@@ -179,12 +179,12 @@ void AboutDialogGraphicsView::hide() {
 
     QRectF r = _graphicsProxyWidget->boundingRect();
     _graphicsProxyWidget->setTransform(QTransform()
-        .translate(r.width() / 2, -_windowTitleBarWidth)
-        .rotate(0, Qt::XAxis)
-        //.rotate(90, Qt::YAxis)
-        //.rotate(5, Qt::ZAxis)
-        //.scale(1 + 1.5 * step, 1 + 1.5 * step)
-        .translate(-r.width() / 2, _windowTitleBarWidth));
+                                       .translate(r.width() / 2, -_windowTitleBarWidth)
+                                       .rotate(0, Qt::XAxis)
+                                       //.rotate(90, Qt::YAxis)
+                                       //.rotate(5, Qt::ZAxis)
+                                       //.scale(1 + 1.5 * step, 1 + 1.5 * step)
+                                       .translate(-r.width() / 2, _windowTitleBarWidth));
 
     _graphicsProxyWidget->show();
     //_aboutDialogAsSplashScreen->show();

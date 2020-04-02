@@ -58,7 +58,7 @@
 
 // Avoid unused parameter warnings by this template
 template<typename T>
-inline void UNUSED_PARAMETER_WARNING_AVOID(T){}
+inline void UNUSED_PARAMETER_WARNING_AVOID(T) {}
 
 //! \defgroup grp_Indenter All concerning handling of the indenter.
 
@@ -82,20 +82,20 @@ inline void UNUSED_PARAMETER_WARNING_AVOID(T){}
     order starting at index 0.
  */
 IndentHandler::IndentHandler(int indenterID, QWidget *mainWindow, QWidget *parent) : QWidget(parent)
-	, _indenterSelectionCombobox(NULL)
-	, _indenterParameterHelpButton(NULL)
-	, _toolBoxContainerLayout(NULL)
-	, _indenterParameterCategoriesToolBox(NULL)
-	, _indenterSettings(NULL)
-	, _mainWindow(NULL)
-	, _errorMessageDialog(NULL)
-	, _menuIndenter(NULL)
-	, _actionLoadIndenterConfigFile(NULL)
-	, _actionSaveIndenterConfigFile(NULL)
-	, _actionCreateShellScript(NULL)
-	, _actionResetIndenterParameters(NULL)
-	, _parameterChangedCallback(NULL)
-	, _windowClosedCallback(NULL)
+    , _indenterSelectionCombobox(NULL)
+    , _indenterParameterHelpButton(NULL)
+    , _toolBoxContainerLayout(NULL)
+    , _indenterParameterCategoriesToolBox(NULL)
+    , _indenterSettings(NULL)
+    , _mainWindow(NULL)
+    , _errorMessageDialog(NULL)
+    , _menuIndenter(NULL)
+    , _actionLoadIndenterConfigFile(NULL)
+    , _actionSaveIndenterConfigFile(NULL)
+    , _actionCreateShellScript(NULL)
+    , _actionResetIndenterParameters(NULL)
+    , _parameterChangedCallback(NULL)
+    , _windowClosedCallback(NULL)
 {
     Q_ASSERT_X( indenterID >= 0, "IndentHandler", "the selected indenterID is < 0" );
 
@@ -538,7 +538,7 @@ QString IndentHandler::callExecutableIndenter(QString sourceCode, QString inputF
     // If no indenter executable call string could be created before, show an error message.
     if ( _indenterExecutableCallString.isEmpty() ) {
         _errorMessageDialog->showMessage(tr("No indenter executable"),
-            tr("There exists no indenter executable with the name \"%1\" in the directory \"%2\" nor in the global environment.").arg(_indenterFileName).arg(_indenterDirctoryStr) );
+                                         tr("There exists no indenter executable with the name \"%1\" in the directory \"%2\" nor in the global environment.").arg(_indenterFileName).arg(_indenterDirctoryStr) );
         return sourceCode;
     }
 
@@ -548,12 +548,12 @@ QString IndentHandler::callExecutableIndenter(QString sourceCode, QString inputF
     // errors and standard outputs from the process call are merged together
     //indentProcess.setReadChannelMode(QProcess::MergedChannels);
 
-	// Set the directory where the indenter will be executed for the process' environment as PWD.
+    // Set the directory where the indenter will be executed for the process' environment as PWD.
     QStringList env = indentProcess.environment();
     env << "PWD=" + QFileInfo(_tempDirctoryStr).absoluteFilePath();
     indentProcess.setEnvironment( env );
 
-	// Set the directory for the indenter execution
+    // Set the directory for the indenter execution
     indentProcess.setWorkingDirectory( QFileInfo(_tempDirctoryStr).absoluteFilePath() );
 
     qDebug() << __LINE__ << " " << __FUNCTION__ << ": Will call the indenter in the directory " << indentProcess.workingDirectory() << " using this commandline call: " << indenterCompleteCallString;
@@ -568,32 +568,32 @@ QString IndentHandler::callExecutableIndenter(QString sourceCode, QString inputF
         processReturnString += tr("<b>Returned error message:</b> ") + indentProcess.errorString() + "<br>";
 
         switch ( indentProcess.error() ) {
-            case QProcess::FailedToStart :
-                processReturnString += tr("<b>Reason could be:</b> ") + "The process failed to start. Either the invoked program is missing, or you may have insufficient permissions to invoke the program.<br>";
-                break;
-            case QProcess::Crashed :
-                processReturnString += "The process crashed some time after starting successfully.<br>";
-                break;
-            case QProcess::Timedout :
-                processReturnString += "The called indenter did not response for over 10 seconds, so aborted its execution.<br>";
-                break;
-            case QProcess::WriteError :
-                processReturnString += "An error occurred when attempting to write to the process. For example, the process may not be running, or it may have closed its input channel.<br>";
-                break;
-            case QProcess::ReadError :
-                processReturnString += "An error occurred when attempting to read from the process. For example, the process may not be running.<br>";
-                break;
-            case QProcess::UnknownError :
-                processReturnString += "An unknown error occurred. This is the default return value of error().<br>";
-                break;
-            default :
-                break;
+        case QProcess::FailedToStart :
+            processReturnString += tr("<b>Reason could be:</b> ") + "The process failed to start. Either the invoked program is missing, or you may have insufficient permissions to invoke the program.<br>";
+            break;
+        case QProcess::Crashed :
+            processReturnString += "The process crashed some time after starting successfully.<br>";
+            break;
+        case QProcess::Timedout :
+            processReturnString += "The called indenter did not response for over 10 seconds, so aborted its execution.<br>";
+            break;
+        case QProcess::WriteError :
+            processReturnString += "An error occurred when attempting to write to the process. For example, the process may not be running, or it may have closed its input channel.<br>";
+            break;
+        case QProcess::ReadError :
+            processReturnString += "An error occurred when attempting to read from the process. For example, the process may not be running.<br>";
+            break;
+        case QProcess::UnknownError :
+            processReturnString += "An unknown error occurred. This is the default return value of error().<br>";
+            break;
+        default :
+            break;
         }
         processReturnString += tr("<br><b>Callstring was:</b> ") + encodeToHTML(indenterCompleteCallString);
         processReturnString += tr("<br><br><b>Indenter output was:</b><pre>") + "<br>" +
-            "(STDOUT):" + encodeToHTML( indentProcess.readAllStandardOutput() ) + "<br>" +
-            "(STDERR):" + encodeToHTML( indentProcess.readAllStandardError() ) + "<br>" +
-            "</pre></html></body>";
+                               "(STDOUT):" + encodeToHTML( indentProcess.readAllStandardOutput() ) + "<br>" +
+                               "(STDERR):" + encodeToHTML( indentProcess.readAllStandardError() ) + "<br>" +
+                               "</pre></html></body>";
         qWarning() << __LINE__ << " " << __FUNCTION__ << processReturnString;
         QApplication::restoreOverrideCursor();
         _errorMessageDialog->showMessage(tr("Error calling Indenter"), processReturnString);
@@ -605,11 +605,11 @@ QString IndentHandler::callExecutableIndenter(QString sourceCode, QString inputF
         QString exitCode;
         exitCode.setNum(indentProcess.exitCode());
         processReturnString = tr("<b>Indenter returned with exit code:</b> ") + exitCode + "<br>" +
-            tr("<b>Indent console output was:</b> ") + "<br>" +
-            "(STDOUT):" + encodeToHTML( indentProcess.readAllStandardOutput() ) + "<br>" +
-            "(STDERR):" + encodeToHTML( indentProcess.readAllStandardError() ) + "<br>" +
-            tr("<br><b>Callstring was:</b> ") + encodeToHTML(indenterCompleteCallString) +
-            "</html></body>";
+                              tr("<b>Indent console output was:</b> ") + "<br>" +
+                              "(STDOUT):" + encodeToHTML( indentProcess.readAllStandardOutput() ) + "<br>" +
+                              "(STDERR):" + encodeToHTML( indentProcess.readAllStandardError() ) + "<br>" +
+                              tr("<br><b>Callstring was:</b> ") + encodeToHTML(indenterCompleteCallString) +
+                              "</html></body>";
         qWarning() << __LINE__ << " " << __FUNCTION__ << processReturnString;
         QApplication::restoreOverrideCursor();
         _errorMessageDialog->showMessage( tr("Indenter returned error"), processReturnString );
@@ -946,7 +946,7 @@ void IndentHandler::readIndentIniFile(QString iniFilePath) {
 
     if ( _indenterFileName.isEmpty() ) {
         _errorMessageDialog->showMessage( tr("Indenter ini file header error"),
-            tr("The loaded indenter ini file \"%1\"has a faulty header. At least the indenters file name is not set.").arg(iniFilePath) );
+                                          tr("The loaded indenter ini file \"%1\"has a faulty header. At least the indenters file name is not set.").arg(iniFilePath) );
     }
 
     // Read the parameter order. Possible values are (p=parameter[file] i=inputfile o=outputfile)
@@ -1404,7 +1404,7 @@ bool IndentHandler::createIndenterCallString() {
                 // now we know an interpreter is needed but it could not be called, so inform the user.
                 else {
                     _errorMessageDialog->showMessage( tr("Interpreter needed"),
-                        tr("To use the selected indenter the program \"%1\" needs to be available in the global environment. You should add an entry to your path settings.").arg(interpreterName) );
+                                                      tr("To use the selected indenter the program \"%1\" needs to be available in the global environment. You should add an entry to your path settings.").arg(interpreterName) );
                     return true;
                 }
             }
@@ -1725,7 +1725,7 @@ void IndentHandler::updateDrawing() {
 }
 
 void IndentHandler::wheelEvent( QWheelEvent *event ) {
-	UNUSED_PARAMETER_WARNING_AVOID(event);
+    UNUSED_PARAMETER_WARNING_AVOID(event);
 #ifdef UNIVERSALINDENTGUI_NPP_EXPORTS
     QWidget::wheelEvent( event );
     updateDrawing();

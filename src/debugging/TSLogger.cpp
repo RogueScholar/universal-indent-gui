@@ -77,7 +77,7 @@ TSLogger* TSLogger::getInstance() {
     Sets the default verbose level to warning level.
  */
 TSLogger::TSLogger(int verboseLevel) : QDialog() {
-	_TSLoggerDialogForm = new Ui::TSLoggerDialog();
+    _TSLoggerDialogForm = new Ui::TSLoggerDialog();
     _TSLoggerDialogForm->setupUi(this);
 #ifdef _DEBUG
     _verboseLevel = QtDebugMsg;
@@ -103,13 +103,13 @@ void TSLogger::messageHandler(QtMsgType type, const QMessageLogContext &,  const
     if ( _instance == NULL )
         _instance = TSLogger::getInstance();
 
-/*
-    QMessageBox messageBox;
-    QString messageBoxText = QString::fromUtf8( msg );
-    messageBox.setText( messageBoxText );
-    messageBox.setWindowModality( Qt::ApplicationModal );
-    messageBox.exec();
-*/
+    /*
+        QMessageBox messageBox;
+        QString messageBoxText = QString::fromUtf8( msg );
+        messageBox.setText( messageBoxText );
+        messageBox.setWindowModality( Qt::ApplicationModal );
+        messageBox.exec();
+    */
 
     // Only log messages that have a higher or equal priority than set with the verbose level.
     if ( type < _instance->_verboseLevel )
@@ -120,17 +120,17 @@ void TSLogger::messageHandler(QtMsgType type, const QMessageLogContext &,  const
 
     // Depending on the QtMsgType prepend a different colored Debug, Warning, Critical or Fatal.
     switch (type) {
-        case QtDebugMsg :
-            message += " <span style=\"font-weight:bold; color:black;\">Debug:</span> ";
-            break;
-        case QtWarningMsg :
-            message += " <span style=\"font-weight:bold; color:gold;\">Warning:</span> ";
-            break;
-        case QtCriticalMsg :
-            message += "<span style=\"font-weight:bold; color:red;\">Critical:</span> ";
-            break;
-        case QtFatalMsg :
-            message += " <span style=\"font-weight:bold; color:#D60000;\">Fatal:</span> ";
+    case QtDebugMsg :
+        message += " <span style=\"font-weight:bold; color:black;\">Debug:</span> ";
+        break;
+    case QtWarningMsg :
+        message += " <span style=\"font-weight:bold; color:gold;\">Warning:</span> ";
+        break;
+    case QtCriticalMsg :
+        message += "<span style=\"font-weight:bold; color:red;\">Critical:</span> ";
+        break;
+    case QtFatalMsg :
+        message += " <span style=\"font-weight:bold; color:#D60000;\">Fatal:</span> ";
     }
 
     // Append the to UTF-8 back converted message parameter.
@@ -204,18 +204,18 @@ void TSLogger::writeToLogFile(const QString &message) {
         qsrand( time(NULL) );
         unsigned char randomChar;
         switch ( qrand() % 3 ) {
-            // Append a number from 0 to 9.
-            case 0 :
-                randomChar = qrand() % 10 + '0';
-                break;
-            // Append a upper case characer between A and Z.
-            case 1 :
-                randomChar = qrand() % 26 + 'A';
-                break;
-            // Append a lower case characer between a and z.
-            default :
-                randomChar = qrand() % 26 + 'a';
-                break;
+        // Append a number from 0 to 9.
+        case 0 :
+            randomChar = qrand() % 10 + '0';
+            break;
+        // Append a upper case characer between A and Z.
+        case 1 :
+            randomChar = qrand() % 26 + 'A';
+            break;
+        // Append a lower case characer between a and z.
+        default :
+            randomChar = qrand() % 26 + 'a';
+            break;
         }
         logFileName += "_" + QString(randomChar) + ".html";
 

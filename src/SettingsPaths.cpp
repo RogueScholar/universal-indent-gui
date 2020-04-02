@@ -153,12 +153,12 @@ void SettingsPaths::init() {
     }
 
     qDebug() << __LINE__ << " " << __FUNCTION__ << ": Paths are:" \
-        "<ul><li>_applicationBinaryPath=" << _applicationBinaryPath \
-        << "</li><li>_settingsPath=" << _settingsPath \
-        << "</li><li>_globalFilesPath=" << _globalFilesPath \
-        << "</li><li>_indenterPath=" << _indenterPath \
-        << "</li><li>_tempPath=" << _tempPath \
-        << "</li><li>Running in portable mode=" << _portableMode << "</li></ul>";
+             "<ul><li>_applicationBinaryPath=" << _applicationBinaryPath \
+             << "</li><li>_settingsPath=" << _settingsPath \
+             << "</li><li>_globalFilesPath=" << _globalFilesPath \
+             << "</li><li>_indenterPath=" << _indenterPath \
+             << "</li><li>_tempPath=" << _tempPath \
+             << "</li><li>Running in portable mode=" << _portableMode << "</li></ul>";
 }
 
 

@@ -62,7 +62,7 @@ UiGuiSettings::UiGuiSettings() : QObject() {
     \brief Returns the instance of the settings class. If no instance exists, ONE will be created.
  */
 QSharedPointer<UiGuiSettings> UiGuiSettings::getInstance() {
-	QSharedPointer<UiGuiSettings> sharedInstance = _instance.toStrongRef();
+    QSharedPointer<UiGuiSettings> sharedInstance = _instance.toStrongRef();
     if ( sharedInstance.isNull() ) {
         // Create the settings object, which loads all UiGui settings from a file.
         sharedInstance = QSharedPointer<UiGuiSettings>(new UiGuiSettings());
@@ -634,8 +634,8 @@ bool UiGuiSettings::invokeMethodWithValue( QObject *obj, QMetaMethod mMethod, QV
         return mMethod.invoke( obj, Qt::DirectConnection, Q_ARG(QPixmap, value.value<QPixmap>()) );
     case QVariant::Point :
         return mMethod.invoke( obj, Qt::DirectConnection, Q_ARG(QPoint, value.toPoint()) );
-        //    case QVariant::PointArray :
-        //        return Q_ARG(QPointArray, value.value<QPointArray>()) );
+    //    case QVariant::PointArray :
+    //        return Q_ARG(QPointArray, value.value<QPointArray>()) );
     case QVariant::PointF :
         return mMethod.invoke( obj, Qt::DirectConnection, Q_ARG(QPointF, value.toPointF()) );
     case QVariant::Polygon :

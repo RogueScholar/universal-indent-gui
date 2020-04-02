@@ -24,10 +24,11 @@
 #include <QFile>
 
 namespace Ui {
-	class TSLoggerDialog;
+class TSLoggerDialog;
 }
 
-namespace tschweitzer { namespace debugging {
+namespace tschweitzer {
+namespace debugging {
 
 #define TSLoggerInfoMsg QtMsgType(4)
 
@@ -46,7 +47,7 @@ private slots:
     void openLogFileFolder();
 
 private:
-	Ui::TSLoggerDialog *_TSLoggerDialogForm;
+    Ui::TSLoggerDialog *_TSLoggerDialogForm;
 
     enum LogFileInitState { NOTINITIALZED, INITIALIZING, INITIALZED } _logFileInitState;
     TSLogger(int verboseLevel);
@@ -58,6 +59,7 @@ private:
     QStringList _messageQueue;
 };
 
-}} // namespace tschweitzer::debugging
+}
+} // namespace tschweitzer::debugging
 
 #endif // TSLogger_H

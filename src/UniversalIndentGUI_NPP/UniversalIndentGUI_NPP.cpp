@@ -48,77 +48,77 @@ BOOL APIENTRY DllMain( HANDLE hModule, DWORD reasonForCall, LPVOID lpReserved ) 
 
     switch (reasonForCall)
     {
-        case DLL_PROCESS_ATTACH :
-        {
-            if (!qApp) {
-                int argc = 1;
-                char *argv[] = {"setup", NULL};
-                static QApplication qapp(argc, argv);
-                indentHandler = new IndentHandler(0);
-                indentHandler->setWindowModality( Qt::ApplicationModal );
-                indentHandler->setWindowTitle("UniversalIndentGUI");
-                indentHandler->setWindowIcon(QIcon(QString::fromUtf8(":/mainWindow/icon2.png")));
-                indentHandler->setParameterChangedCallback( NULL );
-                indentHandler->setWindowClosedCallback( showUiGUI );
+    case DLL_PROCESS_ATTACH :
+    {
+        if (!qApp) {
+            int argc = 1;
+            char *argv[] = {"setup", NULL};
+            static QApplication qapp(argc, argv);
+            indentHandler = new IndentHandler(0);
+            indentHandler->setWindowModality( Qt::ApplicationModal );
+            indentHandler->setWindowTitle("UniversalIndentGUI");
+            indentHandler->setWindowIcon(QIcon(QString::fromUtf8(":/mainWindow/icon2.png")));
+            indentHandler->setParameterChangedCallback( NULL );
+            indentHandler->setWindowClosedCallback( showUiGUI );
 
-                // Setting UTF-8 as default 8-Bit encoding to ensure that qDebug does no false string conversion.
-                QTextCodec::setCodecForCStrings( QTextCodec::codecForName("UTF-8") );
-                QTextCodec::setCodecForLocale( QTextCodec::codecForName("UTF-8") );
-                // Force creation of an UiGuiLogger instance here, to avoid recursion with SettingsPaths init function.
-                UiGuiLogger::getInstance();
-                qInstallMsgHandler( UiGuiLogger::messageHandler );
-                UiGuiLogger::messageHandler( UiGuiInfoMsg, QString("Starting UiGUI Version %1 %2").arg(PROGRAM_VERSION_STRING).arg(PROGRAM_REVISION).toLatin1() );
-                UiGuiLogger::messageHandler( UiGuiInfoMsg, QString("Running on %1").arg(UiGuiSystemInfo::getOperatingSystem()).toLatin1() );
+            // Setting UTF-8 as default 8-Bit encoding to ensure that qDebug does no false string conversion.
+            QTextCodec::setCodecForCStrings( QTextCodec::codecForName("UTF-8") );
+            QTextCodec::setCodecForLocale( QTextCodec::codecForName("UTF-8") );
+            // Force creation of an UiGuiLogger instance here, to avoid recursion with SettingsPaths init function.
+            UiGuiLogger::getInstance();
+            qInstallMsgHandler( UiGuiLogger::messageHandler );
+            UiGuiLogger::messageHandler( UiGuiInfoMsg, QString("Starting UiGUI Version %1 %2").arg(PROGRAM_VERSION_STRING).arg(PROGRAM_REVISION).toLatin1() );
+            UiGuiLogger::messageHandler( UiGuiInfoMsg, QString("Running on %1").arg(UiGuiSystemInfo::getOperatingSystem()).toLatin1() );
 
 #ifdef _DEBUG
-                UiGuiLogger::getInstance()->setVerboseLevel(0);
+            UiGuiLogger::getInstance()->setVerboseLevel(0);
 #endif
-            }
+        }
 
-            /* Set function pointers */
-            funcItem[TOGGLE_SHOW_UIGUI_INDEX]._pFunc = showUiGUI;
-            funcItem[EXECUTE_TEXT_INDENT_INDEX]._pFunc = indentText;
-            funcItem[TOGGLE_AUTO_UPDATE_INDEX]._pFunc = toggleAutoUpdate;
+        /* Set function pointers */
+        funcItem[TOGGLE_SHOW_UIGUI_INDEX]._pFunc = showUiGUI;
+        funcItem[EXECUTE_TEXT_INDENT_INDEX]._pFunc = indentText;
+        funcItem[TOGGLE_AUTO_UPDATE_INDEX]._pFunc = toggleAutoUpdate;
 
-            /* Fill menu names */
+        /* Fill menu names */
 #ifdef UNICODE
-            wcscpy(funcItem[TOGGLE_SHOW_UIGUI_INDEX]._itemName, _T("&Show Parameter Settings"));
-            wcscpy(funcItem[EXECUTE_TEXT_INDENT_INDEX]._itemName, _T("&Indent text"));
-            wcscpy(funcItem[TOGGLE_AUTO_UPDATE_INDEX]._itemName, _T("&Enable Text Auto Update"));
+        wcscpy(funcItem[TOGGLE_SHOW_UIGUI_INDEX]._itemName, _T("&Show Parameter Settings"));
+        wcscpy(funcItem[EXECUTE_TEXT_INDENT_INDEX]._itemName, _T("&Indent text"));
+        wcscpy(funcItem[TOGGLE_AUTO_UPDATE_INDEX]._itemName, _T("&Enable Text Auto Update"));
 #else
-            strcpy(funcItem[TOGGLE_SHOW_UIGUI_INDEX]._itemName, "&Show Parameter Settings");
-            strcpy(funcItem[EXECUTE_TEXT_INDENT_INDEX]._itemName, "&Indent text");
-            strcpy(funcItem[TOGGLE_AUTO_UPDATE_INDEX]._itemName, "&Enable Text Auto Update");
+        strcpy(funcItem[TOGGLE_SHOW_UIGUI_INDEX]._itemName, "&Show Parameter Settings");
+        strcpy(funcItem[EXECUTE_TEXT_INDENT_INDEX]._itemName, "&Indent text");
+        strcpy(funcItem[TOGGLE_AUTO_UPDATE_INDEX]._itemName, "&Enable Text Auto Update");
 #endif
 
-            /* Set shortcuts */
-            funcItem[TOGGLE_SHOW_UIGUI_INDEX]._pShKey = new ShortcutKey;
-            funcItem[TOGGLE_SHOW_UIGUI_INDEX]._pShKey->_isAlt   = true;
-            funcItem[TOGGLE_SHOW_UIGUI_INDEX]._pShKey->_isCtrl  = true;
-            funcItem[TOGGLE_SHOW_UIGUI_INDEX]._pShKey->_isShift = true;
-            funcItem[TOGGLE_SHOW_UIGUI_INDEX]._pShKey->_key     = 'T';
-            funcItem[EXECUTE_TEXT_INDENT_INDEX]._pShKey = new ShortcutKey;
-            funcItem[EXECUTE_TEXT_INDENT_INDEX]._pShKey->_isAlt   = true;
-            funcItem[EXECUTE_TEXT_INDENT_INDEX]._pShKey->_isCtrl  = true;
-            funcItem[EXECUTE_TEXT_INDENT_INDEX]._pShKey->_isShift = true;
-            funcItem[EXECUTE_TEXT_INDENT_INDEX]._pShKey->_key     = 'J';
-            funcItem[TOGGLE_AUTO_UPDATE_INDEX]._pShKey = NULL;
-            break;
-        }
-        case DLL_PROCESS_DETACH :
-        {
-            delete funcItem[TOGGLE_SHOW_UIGUI_INDEX]._pShKey;
-            delete indentHandler;
+        /* Set shortcuts */
+        funcItem[TOGGLE_SHOW_UIGUI_INDEX]._pShKey = new ShortcutKey;
+        funcItem[TOGGLE_SHOW_UIGUI_INDEX]._pShKey->_isAlt   = true;
+        funcItem[TOGGLE_SHOW_UIGUI_INDEX]._pShKey->_isCtrl  = true;
+        funcItem[TOGGLE_SHOW_UIGUI_INDEX]._pShKey->_isShift = true;
+        funcItem[TOGGLE_SHOW_UIGUI_INDEX]._pShKey->_key     = 'T';
+        funcItem[EXECUTE_TEXT_INDENT_INDEX]._pShKey = new ShortcutKey;
+        funcItem[EXECUTE_TEXT_INDENT_INDEX]._pShKey->_isAlt   = true;
+        funcItem[EXECUTE_TEXT_INDENT_INDEX]._pShKey->_isCtrl  = true;
+        funcItem[EXECUTE_TEXT_INDENT_INDEX]._pShKey->_isShift = true;
+        funcItem[EXECUTE_TEXT_INDENT_INDEX]._pShKey->_key     = 'J';
+        funcItem[TOGGLE_AUTO_UPDATE_INDEX]._pShKey = NULL;
+        break;
+    }
+    case DLL_PROCESS_DETACH :
+    {
+        delete funcItem[TOGGLE_SHOW_UIGUI_INDEX]._pShKey;
+        delete indentHandler;
 
-            /* save settings */
-            saveSettings();
-            break;
-        }
-        case DLL_THREAD_ATTACH :
-            break;
+        /* save settings */
+        saveSettings();
+        break;
+    }
+    case DLL_THREAD_ATTACH :
+        break;
 
-        case DLL_THREAD_DETACH :
-            break;
+    case DLL_THREAD_DETACH :
+        break;
     }
 
     return TRUE;
