@@ -20,7 +20,7 @@ directories or just one file even out of the editor of your choice that supports
 external tool calls.
 
 Many free available code beautifier, formatter and indenter are currently
-supported, like GNU Indent, Uncrustify, Artistic Styler, PHP Stylist, Ruby
+supported, like GNU Indent, Uncrustify, Artistic Style, PHP Stylist, Ruby
 Beautify, HTML Tidy and many other (look at features for complete list).
 Currently not supported indenters can be easyly added by creating a
 configuration file for them.
@@ -37,9 +37,9 @@ programming language that you even didn't know that it exists.
 
 ![UiGUI Screenshot](doc/images/screenshot8.jpg)
 
-- [Artistic Styler](http://astyle.sourceforge.net/)
+- [Artistic Style](http://astyle.sourceforge.net/)
 - [BCPP](http://invisible-island.net/bcpp/)
-- [ClangFormat](https://releases.llvm.org/10.0.0/tools/clang/docs/ClangFormat.html)
+- [ClangFormat](https://clang.llvm.org/docs/ClangFormat.html)
 - [Cobol Beautify](http://www.siber.com/sct/tools/cbl-beau.html)
 - [CSSTidy](http://csstidy.sourceforge.net/)
 - [Fortran 90 PPR](ftp://ftp.ifremer.fr/ifremer/ditigo/fortran90/)
