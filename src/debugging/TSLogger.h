@@ -32,34 +32,38 @@ namespace debugging {
 
 #define TSLoggerInfoMsg QtMsgType(4)
 
-class TSLogger : public QDialog
-{
-    Q_OBJECT
+class TSLogger : public QDialog {
+  Q_OBJECT
 
 public:
-    static TSLogger* getInstance(int verboseLevel);
-    static TSLogger* getInstance();
-    static void messageHandler(QtMsgType type, const QMessageLogContext &,  const QString &msg);
-    static void deleteInstance();
-    void setVerboseLevel(int level);
+  static TSLogger *getInstance(int verboseLevel);
+  static TSLogger *getInstance();
+  static void messageHandler(QtMsgType type, const QMessageLogContext &,
+                             const QString &msg);
+  static void deleteInstance();
+  void setVerboseLevel(int level);
 
 private slots:
-    void openLogFileFolder();
+  void openLogFileFolder();
 
 private:
-    Ui::TSLoggerDialog *_TSLoggerDialogForm;
+  Ui::TSLoggerDialog *_TSLoggerDialogForm;
 
-    enum LogFileInitState { NOTINITIALZED, INITIALIZING, INITIALZED } _logFileInitState;
-    TSLogger(int verboseLevel);
-    void writeToLogFile(const QString &message);
+  enum LogFileInitState {
+    NOTINITIALZED,
+    INITIALIZING,
+    INITIALZED
+  } _logFileInitState;
+  TSLogger(int verboseLevel);
+  void writeToLogFile(const QString &message);
 
-    static TSLogger* _instance;
-    QtMsgType _verboseLevel;
-    QFile _logFile;
-    QStringList _messageQueue;
+  static TSLogger *_instance;
+  QtMsgType _verboseLevel;
+  QFile _logFile;
+  QStringList _messageQueue;
 };
 
-}
-} // namespace tschweitzer::debugging
+} // namespace debugging
+} // namespace tschweitzer
 
 #endif // TSLogger_H
