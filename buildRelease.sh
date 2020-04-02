@@ -55,7 +55,7 @@ doSVNUpdate=false
 
 
 if [ "$targetSystem" = "src" ]; then
-    targetDir=${targetName}-$version
+    targetDir=$targetName-$version
 else
     targetDir=${targetName}_$targetSystem
 fi
@@ -72,11 +72,11 @@ else
             echo "The QTDIR has not been set via command line parameter!"
             exit 1
         fi
-        QTDIR=`echo $TEST | sed 's/.* //'`
+        QTDIR=`echo "$TEST" | sed 's/.* //'`
     fi
 fi
 
-QMAKESPEC=${targetSystem}-g++
+QMAKESPEC=$targetSystem-g++
 
 echo "Making some environment settings"
 echo "--------------------------------"
@@ -86,14 +86,14 @@ export PATH
 export QMAKESPEC
 echo "QTDIR = $QTDIR"
 echo "QMAKESPEC = $QMAKESPEC"
-echo "pwd = `pwd`"
+echo "pwd = $(pwd)"
 echo "Done"
 echo ""
 
 echo "Delete old target dir and create new one"
 echo "----------------------------------------"
 if [ -d "$targetDir" ]; then
-    rm -r $targetDir &> /dev/null
+    rm -r "$targetDir" &> /dev/null
 fi
 if [ $? -gt 0 ]; then
     echo "ERROR: Deleting dir $targetDir failed!"
@@ -106,7 +106,7 @@ do
     sleep 1
 done
 
-mkdir $targetDir &> /dev/null
+mkdir "$targetDir" &> /dev/null
 if [ $? -gt 0 ]; then
     echo "ERROR: Creating dir $targetDir failed!"
     exit 1
@@ -118,39 +118,39 @@ do
     sleep 1
 done
 
-mkdir $targetDir/indenters &> /dev/null
+mkdir "$targetDir"/indenters &> /dev/null
 if [ $? -gt 0 ]; then
     echo "ERROR: Creating dir indenters failed!"
     exit 1
 fi
-mkdir $targetDir/doc &> /dev/null
+mkdir "$targetDir"/doc &> /dev/null
 if [ $? -gt 0 ]; then
     echo "ERROR: Creating dir doc failed!"
     exit 1
 fi
-mkdir $targetDir/doc/images &> /dev/null
+mkdir "$targetDir"/doc/images &> /dev/null
 if [ $? -gt 0 ]; then
     echo "ERROR: Creating dir doc/images failed!"
     exit 1
 fi
-mkdir $targetDir/translations &> /dev/null
+mkdir "$targetDir"/translations &> /dev/null
 if [ $? -gt 0 ]; then
     echo "ERROR: Creating dir translations failed!"
     exit 1
 fi
-mkdir $targetDir/config &> /dev/null
+mkdir "$targetDir"/config &> /dev/null
 if [ $? -gt 0 ]; then
     echo "ERROR: Creating dir config failed!"
     exit 1
 fi
 # In case of src as target system, create additional dirs.
 if [ "$targetSystem" = "src" ]; then
-    mkdir $targetDir/resources &> /dev/null
+    mkdir "$targetDir"/resources &> /dev/null
     if [ $? -gt 0 ]; then
         echo "ERROR: Creating dir resources failed!"
         exit 1
     fi
-    mkdir $targetDir/src &> /dev/null
+    mkdir "$targetDir"/src &> /dev/null
     if [ $? -gt 0 ]; then
         echo "ERROR: Creating dir src failed!"
         exit 1
@@ -186,9 +186,9 @@ if [ $? -gt 0 ]; then
     exit 1
 fi
 languages="de fr ja ru uk zh_TW"
-for i in $languages
+for i in "$languages"
 do
-    lupdate src -ts ./translations/universalindent_$i.ts &> /dev/null
+    lupdate src -ts ./translations/universalindent_"$i".ts &> /dev/null
     if [ $? -gt 0 ]; then
         echo "ERROR: Could not update file \"universalindent_$i.ts\"!"
         exit 1
@@ -199,7 +199,7 @@ echo ""
 
 echo "Copying the translation files to the target translation dir"
 echo "-----------------------------------------------------------"
-cp ./translations/universalindent*.ts ./$targetDir/translations/ &> /dev/null
+cp ./translations/universalindent*.ts ./"$targetDir"/translations/ &> /dev/null
 if [ $? -gt 0 ]; then
     echo "ERROR: Could not copy file \"universalindent.ts\"!"
     exit 1
@@ -210,12 +210,12 @@ echo ""
 
 echo "Copying the resources and src files to the target dir"
 echo "-----------------------------------------------------"
-cp ./resources/* ./$targetDir/resources/ &> /dev/null
+cp ./resources/* ./"$targetDir"/resources/ &> /dev/null
 if [ $? -gt 0 ]; then
     echo "ERROR: Could not copy dir \"resources\"!"
     exit 1
 fi
-cp -R ./src/* ./$targetDir/src/ &> /dev/null
+cp -R ./src/* ./"$targetDir"/src/ &> /dev/null
 if [ $? -gt 0 ]; then
     echo "ERROR: Could not copy dir \"src\"!"
     exit 1
@@ -225,13 +225,13 @@ while [ ! -f "./$targetDir/src/UniversalIndentGUI_NPP/UniversalIndentGUI_NPPDial
 do
     sleep 1
 done
-rm -Rf ./$targetDir/src/UniversalIndentGUI_NPP &> /dev/null
+rm -Rf ./"$targetDir"/src/UniversalIndentGUI_NPP &> /dev/null
 if [ $? -gt 0 ]; then
     echo "ERROR: Could not delete dir \"UniversalIndentGUI_NPP\"!"
     exit 1
 fi
 # Deleting backup files
-rm ./$targetDir/src/*.*~ &> /dev/null
+rm ./"$targetDir"/src/*.*~ &> /dev/null
 echo "Done"
 echo ""
 
@@ -239,9 +239,9 @@ echo ""
 echo "Copying the indenter project files to the target dir"
 echo "----------------------------------------------------"
 projectfiles="UniversalIndentGUI.pro UniversalIndentGUI.sln VS8QtRules.rules UniversalIndentGUI.xcodeproj"
-for i in $projectfiles
+for i in "$projectfiles"
 do
-    cp -r ./$i ./$targetDir/ &> /dev/null
+    cp -r ./"$i" ./"$targetDir"/ &> /dev/null
     if [ $? -gt 0 ]; then
         echo "ERROR: Could not copy file \"$i\"!"
         exit 1
@@ -253,7 +253,7 @@ echo ""
 
 echo "Copying man page to target dir"
 echo "------------------------------"
-cp ./doc/universalindentgui.man ./$targetDir/doc/ &> /dev/null
+cp ./doc/universalindentgui.man ./"$targetDir"/doc/ &> /dev/null
 if [ $? -gt 0 ]; then
     echo "ERROR: Could not copy file \"/doc/universalindentgui.man\"!"
     exit 1
@@ -312,18 +312,18 @@ echo ""
 if [ "$targetSystem" = "macx" ]; then
     echo "Executing macdeployqt ./release/$targetName.app"
     echo "-----------------------------------------------"
-    macdeployqt ./release/$targetName.app
-    cp -rf $QTDIR/Resources/qt_menu.nib ./release/UniversalIndentGUI.app/Contents/Resources/
+    macdeployqt ./release/"$targetName".app
+    cp -rf "$QTDIR"/Resources/qt_menu.nib ./release/UniversalIndentGUI.app/Contents/Resources/
     echo "Done"
     echo ""
 fi
 
-echo "Copying ${targetName}$ext to target dir"
+echo "Copying $targetName$ext to target dir"
 echo "--------------------------------------------"
 if [ "$targetSystem" = "macx" ]; then
-    cp -R ./release/$targetName.app ./$targetDir/ &> /dev/null
+    cp -R ./release/"$targetName".app ./"$targetDir"/ &> /dev/null
 else
-    cp ./release/$targetName$ext ./$targetDir/ &> /dev/null
+    cp ./release/"$targetName$ext" ./"$targetDir"/ &> /dev/null
 fi
 
 if [ $? -gt 0 ]; then
@@ -334,7 +334,7 @@ fi
 # Try to compress the executable with UPX.
 if [ "$targetSystem" = "win32" ] || [ "$targetSystem" = "linux" ]; then
     echo "Trying to compress the executalbe using UPX."
-    upx$ext --best ./$targetDir/$targetName$ext &> /dev/null
+    upx"$ext" --best ./"$targetDir/$targetName$ext" &> /dev/null
 fi
 if [ $? -gt 0 ]; then
     echo "Compressing the executable using UPX failed. Perhaps UPX doesn't exist."
@@ -358,9 +358,9 @@ fi
 if [ "$ext" = ".exe" ]; then
     indenters="$indenters libiconv-2.dll libintl-2.dll"
 fi
-for i in $indenters
+for i in "$indenters"
 do
-    cp ./indenters/$i ./$targetDir/indenters/ &> /dev/null
+    cp ./indenters/"$i" ./"$targetDir"/indenters/ &> /dev/null
     if [ $? -gt 0 ]; then
         echo "WARNING: Could not copy indenter file \"$i\"!"
         WARNINGOCCURRED=true
@@ -374,9 +374,9 @@ if [ "$ext" = ".exe" ]; then
 	echo "-------------------------------------"
 
     qtdlls="QtCore4.dll QtGui4.dll QtNetwork4.dll QtScript4.dll qscintilla2.dll"
-    for i in $qtdlls
+    for i in "$qtdlls"
 	do
-	    cp $QTDIR/lib/$i ./$targetDir/ &> /dev/null
+	    cp "$QTDIR/lib/$i" ./"$targetDir"/ &> /dev/null
 	    if [ $? -gt 0 ]; then
 	        echo "WARNING: Could not copy Qt dll \"$i\"!"
 	        WARNINGOCCURRED=true
@@ -387,9 +387,9 @@ if [ "$ext" = ".exe" ]; then
 	echo "----------------------------------------"
 
     qtdlls="mingwm10.dll libgcc_s_dw2-1.dll"
-    for i in $qtdlls
+    for i in "$qtdlls"
 	do
-	    cp $QTDIR/../../../../mingw/bin/$i ./$targetDir/ &> /dev/null
+	    cp "$QTDIR/../../../../mingw/bin/$i" ./"$targetDir"/ &> /dev/null
 	    if [ $? -gt 0 ]; then
 	        echo "WARNING: Could not copy Qt dll \"$i\"!"
 	        WARNINGOCCURRED=true
@@ -402,12 +402,12 @@ fi
 
 echo "Copying the translation binaries to the target translation dir"
 echo "--------------------------------------------------------------"
-cp ./translations/qt_*.qm ./$targetDir/translations/ &> /dev/null
+cp ./translations/qt_*.qm ./"$targetDir"/translations/ &> /dev/null
 if [ $? -gt 0 ]; then
     echo "ERROR: Could not copy file \"qt_*.qm\"!"
     exit 1
 fi
-cp ./translations/universalindent_*.qm ./$targetDir/translations/ &> /dev/null    
+cp ./translations/universalindent_*.qm ./"$targetDir"/translations/ &> /dev/null    
 if [ $? -gt 0 ]; then
     echo "ERROR: Could not copy file \"universalindent_*.qm\"!"
     exit 1
@@ -423,9 +423,9 @@ fi
 echo "Copying the script based indenters to the target indenters dir"
 echo "--------------------------------------------------------------"
 indenters="hindent hindent.html JsDecoder.js perltidy phpStylist.php phpStylist.txt pindent.py pindent.txt rbeautify.rb ruby_formatter.rb shellindent.awk"
-for i in $indenters
+for i in "$indenters"
 do
-    cp ./indenters/$i ./$targetDir/indenters/ &> /dev/null
+    cp ./indenters/"$i" ./"$targetDir"/indenters/ &> /dev/null
     if [ $? -gt 0 ]; then
         echo "ERROR: Could not copy file \"$i\"!"
         exit 1
@@ -436,7 +436,7 @@ echo ""
 
 echo "Copying the indenter example files to the target indenters dir"
 echo "--------------------------------------------------------------"
-cp ./indenters/example.* ./$targetDir/indenters/ &> /dev/null
+cp ./indenters/example.* ./"$targetDir"/indenters/ &> /dev/null
 if [ $? -gt 0 ]; then
     echo "ERROR: Could not copy the example.* files!"
     exit 1
@@ -447,7 +447,7 @@ echo ""
 
 echo "Copying the indenter uigui ini files to the target indenters dir"
 echo "----------------------------------------------------------------"
-cp ./indenters/uigui*.ini ./$targetDir/indenters/ &> /dev/null
+cp ./indenters/uigui*.ini ./"$targetDir"/indenters/ &> /dev/null
 if [ $? -gt 0 ]; then
     echo "ERROR: Could not copy the uigui*.ini files!"
     exit 1
@@ -458,7 +458,7 @@ echo ""
 
 echo "Copying the default syntax highlight ini file to the target config dir"
 echo "----------------------------------------------------------------------"
-cp ./config/UiGuiSyntaxHighlightConfig.ini ./$targetDir/config/ &> /dev/null
+cp ./config/UiGuiSyntaxHighlightConfig.ini ./"$targetDir"/config/ &> /dev/null
 if [ $? -gt 0 ]; then
     echo "ERROR: Could not copy the UiGuiSyntaxHighlightConfig.ini file!"
     exit 1
@@ -470,9 +470,9 @@ echo ""
 echo "Copying some other files (README, CHANGELOG etc)"
 echo "------------------------------------------------"
 otherfiles="CHANGELOG.txt LICENSE.GPL INSTALL.txt readme.html"
-for i in $otherfiles
+for i in "$otherfiles"
 do
-    cp ./$i ./$targetDir/ &> /dev/null
+    cp ./"$i" ./"$targetDir"/ &> /dev/null
     if [ $? -gt 0 ]; then
         echo "ERROR: Could not copy file \"$i\"!"
         exit 1
@@ -488,15 +488,15 @@ docfiles="iniFileFormat.html"
 if [ ! "$ext" = ".exe" ]; then
     indenters="$docfiles universalindentgui.man"
 fi
-for i in $docfiles
+for i in "$docfiles"
 do
-    cp ./doc/$i ./$targetDir/doc/ &> /dev/null
+    cp ./doc/"$i" ./"$targetDir"/doc/ &> /dev/null
     if [ $? -gt 0 ]; then
         echo "ERROR: Could not copy file \"$i\"!"
         exit 1
     fi
 done
-cp ./doc/images/* ./$targetDir/doc/images/ &> /dev/null
+cp ./doc/images/* ./"$targetDir"/doc/images/ &> /dev/null
 if [ $? -gt 0 ]; then
     echo "ERROR: Could not copy files from directory doc/images !"
     exit 1
@@ -509,18 +509,18 @@ echo "Packing the whole target dir"
 echo "----------------------------"
 if [ "$ext" = ".exe" ]; then
 	echo "Doing: zip -r9 ${targetName}_${version}_$targetSystem.zip $targetDir"
-    zip -r9 ${targetName}_${version}_$targetSystem.zip $targetDir &> /dev/null
+    zip -r9 "${targetName}_${version}_$targetSystem".zip "$targetDir" &> /dev/null
     if [ $? -gt 0 ]; then
         echo "ERROR: Could not create archive \"${targetName}_${version}_$targetSystem.zip\"!"
         exit 1
     fi
 else
     if [ "$targetSystem" = "src" ]; then
-        targetArchiveName=${targetName}-${version}.tar
+        targetArchiveName=$targetName-$version.tar
     else
         targetArchiveName=${targetName}_${version}_$targetSystem.tar
     fi
-    tar cf $targetArchiveName $targetDir &> /dev/null
+    tar cf "$targetArchiveName" "$targetDir" &> /dev/null
     if [ $? -gt 0 ]; then
         echo "ERROR: Could not create archive \"$targetArchiveName\"!"
         exit 1
@@ -530,7 +530,7 @@ else
     do
         sleep 1
     done
-    gzip -9 -f $targetArchiveName
+    gzip -9 -f "$targetArchiveName"
     if [ $? -gt 0 ]; then
         echo "ERROR: Could not create archive \"$targetArchiveName.gz\"!"
         exit 1
