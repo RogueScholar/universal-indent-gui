@@ -159,7 +159,7 @@ But if you'd like to build UiGUI from source, follow these steps:
     [QScintilla](http://www.riverbankcomputing.com/software/qscintilla/download) >=
     2.2.
 3.  Checkout UiGUI: git clone
-    git@github.com:danblakemore/universal-indent-gui.git  
+    git@github.com:danblakemore/universal-indent-gui.git
     ~~svn co
     https://universalindent.svn.sourceforge.net/svnroot/universalindent/trunk
     universalindentgui~~
